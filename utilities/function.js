@@ -69,8 +69,7 @@ export function sendAccountActivationEmail(user, subject, text) {
 }
 
 export function getProfilePicUrl(req, picurl) {
-  picurl.indexOf("http://");
   const protocol = req.protocol || "http"; // Default to 'http' if not set
-  const host = req.get("host"); // localhost:3000 or your actual domain
+  const host = req.get("host");
   return `${protocol}://${host}/${picurl}`;
 }
