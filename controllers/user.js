@@ -112,7 +112,7 @@ async function update(req, res) {
             token: token,
             name: data.name,
             email: data.email,
-            profilePic: data.profilePic || data.googleProfilePic,
+            profilePic: data.profilePic,
           },
         });
       })

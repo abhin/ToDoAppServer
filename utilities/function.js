@@ -60,9 +60,27 @@ export function sendAccountActivationEmail(user, subject, text) {
             Welcome ${name}!
             Thank you for signup
             Please click on the bewlo link to activate your account. 
-            Link: ${process.env.SERVER_LIVE_HOST_URL || process.env.SERVER_LOCAL_HOST_URL}/api/v1/users/activate/${generateAccessToken(
-              _id
-            )}  
+            Link: ${
+              process.env.SERVER_LIVE_HOST_URL ||
+              process.env.SERVER_LOCAL_HOST_URL
+            }/api/v1/users/activate/${generateAccessToken(_id)}  
         `,
   });
+}
+
+export function getProfilePicUrl(req, picurl) {
+  picurl.indexOf("http://");
+  const protocol = req.protocol || "http"; // Default to 'http' if not set
+  const host = req.get("host"); // localhost:3000 or your actual domain
+  return `${protocol}://${host}/${picurl}`;
+}
+
+export function isValidUrl(url) {
+  var urlPattern = /^https?:\/\/[^\s/$.?#].[^\s]*$/;
+
+  if (urlPattern.test(url)) {
+    return true;
+  } else {
+    return false;
+  }
 }

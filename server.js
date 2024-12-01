@@ -34,7 +34,7 @@ server.get(`${URL}/healthcheck`, (req, res) => {
 });
 
 mongoose
-  .connect(process.env.DB_URL)
+  .connect(process.env.LIVE_DB_URL || process.env.LOCAL_HOST_DB_URL)
   .then((data) => {
     server.listen(PORT, () => {
       console.log(`DB connected & Server is running...Port: ${PORT}`);
