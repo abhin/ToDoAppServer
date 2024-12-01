@@ -74,13 +74,3 @@ export function getProfilePicUrl(req, picurl) {
   const host = req.get("host"); // localhost:3000 or your actual domain
   return `${protocol}://${host}/${picurl}`;
 }
-
-export function isValidUrl(url) {
-  var urlPattern = /^https?:\/\/[^\s/$.?#].[^\s]*$/;
-
-  if (urlPattern.test(url)) {
-    return true;
-  } else {
-    return false;
-  }
-}

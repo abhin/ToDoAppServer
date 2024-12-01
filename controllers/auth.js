@@ -1,10 +1,10 @@
 import bcrypt from "bcrypt";
+import isUrl from "is-url";
 import User from "../modals/user.js";
 import {
   generateAccessToken,
   sendAccountActivationEmail,
   getProfilePicUrl,
-  isValidUrl,
 } from "../utilities/function.js";
 
 async function login(req, res) {
@@ -33,7 +33,7 @@ async function login(req, res) {
         name: user.name,
         email: user.email,
         profilePic:
-          (isValidUrl(user.profilePic) && user.profilePic) ||
+          (isUrl(user.profilePic) && user.profilePic) ||
           getProfilePicUrl(req, user.profilePic),
       },
     });
@@ -69,9 +69,7 @@ async function googleLoginCallBack(req, res) {
     }
 
     res.redirect(
-      `${
-        process.env.CLIENT_LIVE_HOST_URL || process.env.CLIENT_LOCAL_HOST_URL
-      }/${generateAccessToken(email, "1d")}`
+      `${process.env.CLIENT_HOST_URL}/${generateAccessToken(email, "1d")}`
     );
   } catch (error) {
     res.status(400).json({
