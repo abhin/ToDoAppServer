@@ -13,6 +13,7 @@ export function isLoggedIn(req, res, next) {
   } catch (error) {
     res.status(200).json({
       success: false,
+      invalidToken: true,
       message: error.message,
     });
   }
