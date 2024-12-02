@@ -8,7 +8,7 @@ async function create(req, res) {
         "Failed to create ToDo title and description are required."
       );
 
-    const existingTodo = await ToDo.exists({ title });
+    const existingTodo = await ToDo.exists({ title, user: req?.authUser?.uId });
     if (existingTodo != null) throw new Error("ToDo already exists");
 
     ToDo.create({
@@ -23,9 +23,9 @@ async function create(req, res) {
         message: "ToDo is created.",
         toDo: data,
       });
-    });
+    })
   } catch (error) {
-    return res.status(400).json({
+    return res.status(200).json({
       success: false,
       message: error.message,
     });
@@ -41,7 +41,7 @@ async function getAllTodos(req, res) {
       });
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: error.message,
     });
@@ -66,7 +66,7 @@ async function update(req, res) {
       });
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: error.message,
     });
@@ -88,7 +88,7 @@ async function deleteTodo(req, res) {
       });
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: error.message,
     });

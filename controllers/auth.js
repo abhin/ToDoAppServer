@@ -33,12 +33,12 @@ async function login(req, res) {
         name: user.name,
         email: user.email,
         profilePic:
-          (isUrl(user.profilePic) && user.profilePic) ||
-          getProfilePicUrl(req, user.profilePic),
+        user?.profilePic && ((isUrl(user.profilePic) && user.profilePic) ||
+          getProfilePicUrl(req, user.profilePic)),
       },
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: error.message,
     });
@@ -72,7 +72,7 @@ async function googleLoginCallBack(req, res) {
       `${process.env.CLIENT_HOST_URL}/${generateAccessToken(email, "1d")}`
     );
   } catch (error) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: error.message,
     });
@@ -96,7 +96,7 @@ function googleUserVerify(req, res) {
       });
     })
     .catch((err) => {
-      res.status(400).json({
+      res.status(200).json({
         success: false,
         message: "Error/ Timeout Google user verification. Please try again",
         error: err,

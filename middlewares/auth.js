@@ -11,7 +11,7 @@ export function isLoggedIn(req, res, next) {
     req.authUser = data;
     next();
   } catch (error) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: error.message,
     });

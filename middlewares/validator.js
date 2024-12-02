@@ -11,7 +11,7 @@ export function getValidationResult(req, res, next) {
             message: result,
           }); 
       } catch (error) {
-        res.status(400).json({
+        res.status(200).json({
           success: false,
           message: error.message,
         });

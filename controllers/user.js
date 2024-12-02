@@ -54,7 +54,7 @@ async function create(req, res) {
       user: user,
     });
   } catch (error) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: error.message,
     });
@@ -70,7 +70,7 @@ function getAllUsers(req, res) {
       });
     })
     .catch((err) => {
-      res.status(400).json({
+      res.status(200).json({
         success: false,
         message: "Error found during User creation",
         error: err,
@@ -117,9 +117,9 @@ async function update(req, res) {
         });
       })
       .catch((err) => {
-        res.status(400).json({
+        res.status(200).json({
           success: false,
-          message: "Error found during User creation",
+          message: "Error found during User updation",
           error: err,
         });
       });
@@ -144,7 +144,7 @@ async function deleteUser(req, res) {
         });
       })
       .catch((err) => {
-        res.status(400).json({
+        res.status(200).json({
           success: false,
           message: "Error found during User creation",
           error: err,
@@ -191,13 +191,9 @@ async function activate(req, res) {
     if (!status)
       throw new Error("Account activation succes. Failed to send email.");
 
-    return res.status(200).json({
-      success: true,
-      message: "Account is activated",
-      user: user,
-    });
+    res.redirect(`${process.env.CLIENT_HOST_URL}/activation-success/Account is activated`);
   } catch (error) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       error: error.message,
     });

@@ -50,6 +50,7 @@ export function generateAccessToken(uId, expiresIn = "1h") {
 }
 
 export function sendAccountActivationEmail(user, subject, text) {
+  console.log('process.env.SERVER_HOST_URL', process.env.SERVER_HOST_URL);
   const { email, name, _id } = user;
   return sendEmail({
     to: email,
@@ -61,8 +62,7 @@ export function sendAccountActivationEmail(user, subject, text) {
             Thank you for signup
             Please click on the bewlo link to activate your account. 
             Link: ${
-              process.env.SERVER_LIVE_HOST_URL ||
-              process.env.SERVER_LOCAL_HOST_URL
+              process.env.SERVER_HOST_URL
             }/api/v1/users/activate/${generateAccessToken(_id)}  
         `,
   });
