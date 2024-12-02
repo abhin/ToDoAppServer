@@ -87,7 +87,7 @@ async function update(req, res) {
   const existingUser = await User.exists({ email, _id: { $ne: id } });
 
   if (existingUser != null) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: "This email is already used. ",
     });
@@ -131,7 +131,7 @@ async function deleteUser(req, res) {
   const existingUser = await User.exists({ _id });
 
   if (existingUser == null) {
-    res.status(400).json({
+    res.status(200).json({
       success: false,
       message: "User does not exist",
     });
@@ -168,7 +168,7 @@ async function activate(req, res) {
     const activated = await User.findById(data?.uId);
 
     if (activated?.active) {
-      return res.status(400).json({
+      return res.status(200).json({
         success: false,
         message: "Invalid url",
       });
