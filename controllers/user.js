@@ -80,7 +80,7 @@ function getAllUsers(req, res) {
 
 async function update(req, res) {
   const { name, email, password, active } = req.body;
-  const profilePic = req?.file?.path;
+  const profilePic = req?.file?.location || req?.file?.path;
   const token = req.headers.authorization;
   const id = req?.authUser?.uId;
 

@@ -8,8 +8,9 @@ import {
 } from "../controllers/user.js";
 import { body } from "express-validator";
 import { getValidationResult } from "../middlewares/validator.js";
-import upload from "../middlewares/fileUpload.js";
 import { isLoggedIn } from "../middlewares/auth.js";
+import { awsUpload } from "../middlewares/fileUpload.js";
+
 
 const router = express.Router();
 
@@ -53,6 +54,11 @@ router.get("/read", getAllUsers);
 router.put("/update", update);
 router.get("/delete/:_id", deleteUser);
 router.get("/activate/:token", activate);
-router.put("/updateprofile", isLoggedIn, upload.single('profilePhoto'), update);
+router.put(
+  "/updateprofile",
+  isLoggedIn,
+  awsUpload.single("profilePhoto"),
+  update
+);
 
 export default router;
