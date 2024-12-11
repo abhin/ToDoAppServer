@@ -38,8 +38,10 @@ export async function sendEmail({
 
     return info;
   } catch (error) {
-    return false;
-    console.log(error);
+    return {
+      success: false,
+      message:error
+    };
   }
 }
 
@@ -50,7 +52,6 @@ export function generateAccessToken(uId, expiresIn = "1h") {
 }
 
 export function sendAccountActivationEmail(user, subject, text) {
-  console.log('process.env.SERVER_HOST_URL', process.env.SERVER_HOST_URL);
   const { email, name, _id } = user;
   return sendEmail({
     to: email,

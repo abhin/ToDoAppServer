@@ -7,19 +7,16 @@ import {
 import jwt from "jsonwebtoken";
 
 async function create(req, res) {
-  const { name, email, password, profilePic, active } = req.body;
+  const { name, email, password, profilePic, active, sendEmail } = req.body;
+  let error;
 
   try {
-    if (!name || !email || !password) {
-      throw new Error(
-        "Failed to create User name, email, password are required."
-      );
-    }
-
     const existingUser = await User.exists({ email });
 
     if (existingUser != null) {
-      throw new Error("User already exists");
+      error = new Error("User already exists.");
+      error.statusCode = 400;
+      throw error;
     }
 
     const passwordHash = await bcrypt.hashSync(
@@ -35,16 +32,14 @@ async function create(req, res) {
       active,
     });
 
-    if (!user) {
-      throw new Error("Error found during User creation");
-    }
+    const emailSendStatus = sendEmail && !(await sendAccountActivationEmail(user)) || {};
 
-    const status = await sendAccountActivationEmail(user);
-
-    if (!status) {
-      throw new Error(
+    if (sendEmail && !emailSendStatus?.success) {
+      error = new Error(
         "Failed to send activation email. Please contact support."
       );
+      error.statusCode = 500;
+      throw error;
     }
 
     return res.status(200).json({
@@ -54,7 +49,7 @@ async function create(req, res) {
       user: user,
     });
   } catch (error) {
-    res.status(500).json({
+    res.status(error?.statusCode || 400).json({
       success: false,
       message: error.message,
     });
@@ -191,7 +186,9 @@ async function activate(req, res) {
     if (!status)
       throw new Error("Account activation succes. Failed to send email.");
 
-    res.redirect(`${process.env.CLIENT_HOST_URL}/activation-success/Account is activated`);
+    res.redirect(
+      `${process.env.CLIENT_HOST_URL}/activation-success/Account is activated`
+    );
   } catch (error) {
     res.status(200).json({
       success: false,

@@ -6,12 +6,12 @@ export function getValidationResult(req, res, next) {
         if (result.isEmpty()) 
             next();
         else 
-        res.status(200).json({
+        res.status(400).json({
             success: false,
             message: result,
           }); 
       } catch (error) {
-        res.status(200).json({
+        res.status(400).json({
           success: false,
           message: error.message,
         });
