@@ -54,7 +54,7 @@ async function create(req, res) {
       user: user,
     });
   } catch (error) {
-    res.status(200).json({
+    res.status(500).json({
       success: false,
       message: error.message,
     });

@@ -4,7 +4,8 @@
   "description": "Assignment 12",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
+    "start": "node index.js"
   },
   "keywords": [
     "Assignment",
@@ -31,5 +32,9 @@
     "passport-google-oauth20": "^2.0.0",
     "react-toastify": "^10.0.6"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
 }

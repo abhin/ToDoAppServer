@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
@@ -17,8 +16,6 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-const PORT = process.env.PORT;
-
 const server = express();
 server.use(bodyParser.json());
 passport.use(googleStrategy());
@@ -35,13 +32,4 @@ server.get(`${URL}/healthcheck`, (req, res) => {
   });
 });
 
-mongoose
-  .connect(process.env.DB_URL)
-  .then((data) => {
-    server.listen(PORT || 8000, () => {
-      console.log(`DB connected & Server is running...Port: ${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.log("Database connection error", err);
-  });
+export default server;
